@@ -5,7 +5,7 @@ const PublishingPartners = () => {
   const publisher = {
     name: "STM",
     description: "Leading publisher in scientific, technical, and medical research",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/STM_Logo.png", // Example logo URL
+    logo: "public/images/stm logo.png", // Example logo URL
     journals: [
       "Journal of Advanced Research",
       "Scientific Reports"

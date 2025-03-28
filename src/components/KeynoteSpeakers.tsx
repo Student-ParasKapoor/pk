@@ -8,21 +8,21 @@ const KeynoteSpeakers = () => {
       title: "Professor, Department of Civil Engineering",
       institution: "NITTTR, Kolkata",
       // expertise: "Artificial Intelligence and Robotics",
-      image: "public/naveen.jpg"
+      image: "public/images/naveen.jpg"
     },
     {
       name: "Professor Ir. Dr. U. Johnson Alengaram",
       title: "Professor & Director",
       institution: "University of Malaya, Kuala Lumpur, Malaysia",
       // expertise: "Quantum Computing and Machine Learning",
-      image: "public/Jhonson.jpg"
+      image: "public/images/Jhonson.jpg"
     },
     {
       name: "Raj Kapoor",
       title: "Founder, Chairman",
       institution: "India Blockchain Alliance, The Global Alliance for Artificial Intelligence and Innovation",
       // expertise: "Sustainable Energy Systems",
-      image: "public/raj.jpg"
+      image: "public/images/raj.jpg"
     },
     {
       name: "Dr. James Wilson",

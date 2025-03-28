@@ -35,7 +35,7 @@ const AboutPCE: React.FC = () => {
           </div>
           <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
             <img
-              src="/Poornimaimage.png"
+              src="public\images\Poornimaimage.png"
               alt="Poornima College of Engineering Campus"
               className="w-full h-full object-cover"
             />
@@ -49,10 +49,10 @@ const AboutPCE: React.FC = () => {
 // AboutJaipur Component
 const AboutJaipur: React.FC = () => {
   const images: string[] = [
-    "/jaipur1.jpg",
-    "/jaipur2.jpg",
-    "/jaipur3.jpg",
-    "/jaipur4.jpg"
+    "images/jaipur1.jpg",
+    "images/jaipur2.jpg",
+    "images/jaipur3.jpg",
+    "images/jaipur4.jpg"
   ];
 
   return (
@@ -238,9 +238,9 @@ const Navbar: React.FC = () => {
       <div className="bg-white py-4 px-6 shadow-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-6">
-            <img src="/pcelogo.jpg" alt="Poornima College of Engineering Logo" className="h-16 w-auto object-contain" />
+            <img src="images/pcelogo.jpg" alt="Poornima College of Engineering Logo" className="h-16 w-auto object-contain" />
             <div className="hidden md:block h-12 w-px bg-gray-300" />
-            <img src="/naaclogo.jpg" alt="NAAC Logo" className="h-14 w-auto" />
+            <img src="images/naaclogo.jpg" alt="NAAC Logo" className="h-14 w-auto" />
           </div>
           <div className="mt-4 md:mt-0 text-center md:text-right">
             <h1 className="text-xl font-bold text-[#1a2a5e]">International Conference 2025</h1>
