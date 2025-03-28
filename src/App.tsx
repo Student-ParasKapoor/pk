@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, MessageCircle } from 'lucide-react'; // Added MessageCircle for chatbot icon
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CallForPapers from './components/CallForPapers';
 import ProgramRegistration from './components/ProgramRegistration';
@@ -8,12 +8,16 @@ import PublicationEthics from './components/PublicationEthics';
 import KeynoteSpeakers from './components/KeynoteSpeakers';
 import Downloads from './components/Downloads';
 import Gallery from './components/Gallery';
-import Organization from './components/Organization';
-import HistoryComponent from './components/History';
+import History from './components/History';
 import Contact from './components/Contact';
 
+// Placeholder subcomponents for Organization
+const AdvisoryCommittee: React.FC = () => <div>Advisory Committee Content</div>;
+const TechnicalCommittee: React.FC = () => <div>Technical Committee Content</div>;
+const OrganizingCommittee: React.FC = () => <div>Organizing Committee Content</div>;
+
 // AboutPCE Component
-const AboutPCE = () => {
+const AboutPCE: React.FC = () => {
   return (
     <div className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +36,7 @@ const AboutPCE = () => {
           <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
             <img
               src="/Poornimaimage.png"
-              alt="Poornima College of Engineering"
+              alt="Poornima College of Engineering Campus"
               className="w-full h-full object-cover"
             />
           </div>
@@ -43,8 +47,8 @@ const AboutPCE = () => {
 };
 
 // AboutJaipur Component
-const AboutJaipur = () => {
-  const images = [
+const AboutJaipur: React.FC = () => {
+  const images: string[] = [
     "/jaipur1.jpg",
     "/jaipur2.jpg",
     "/jaipur3.jpg",
@@ -61,31 +65,18 @@ const AboutJaipur = () => {
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div className="prose prose-lg text-gray-600 text-justify">
             <p className="mb-4">
-              One of the most beautiful cities of Rajasthan known as Pink City Jaipur was the
-              stronghold of a clan of rulers whose three hill forts and a series of palaces in the city
-              are important attractions. It is known as the Pink City because of the color of the stones
-              specifically used in the walled city, and Jaipur's bazaars sell embroidered leather shoes,
-              blue pottery, tie-dye scarves, and other exotic goods.
+              One of the most beautiful cities of Rajasthan known as Pink City Jaipur was the stronghold of a clan of rulers whose three hill forts and a series of palaces in the city are important attractions. It is known as the Pink City because of the color of the stones specifically used in the walled city, and Jaipur's bazaars sell embroidered leather shoes, blue pottery, tie-dye scarves, and other exotic goods.
             </p>
             <p className="mb-4">
-              The western part of Rajasthan itself forms a convenient track in the heart of the Thar Desert,
-              shaping its history, lifestyle, and architecture. It was founded on November 18, 1727, by the ruler of
-              Amber, Maharaja Sawai Jai Singh II, the city named after him, the capital of Rajasthan
-              with wide avenues and spacious gardens.
+              The western part of Rajasthan itself forms a convenient track in the heart of the Thar Desert, shaping its history, lifestyle, and architecture. It was founded on November 18, 1727, by the ruler of Amber, Maharaja Sawai Jai Singh II, the city named after him, the capital of Rajasthan with wide avenues and spacious gardens.
             </p>
           </div>
           <div className="prose prose-lg text-gray-600">
             <p className="mb-4">
-              Here, the past comes to life in magnificent fortresses and palaces that are pink and once
-              lived in maharajahs. Jaipur's bustling bazaar, famous for its Rajasthan jewelry fabrics
-              and shoes, boasts timeless quality and is undoubtedly a treasure trove for shoppers.
-              This charming city, with its romantic charm, takes you into the era of royalty and tradition.
+              Here, the past comes to life in magnificent fortresses and palaces that are pink and once lived in maharajahs. Jaipur's bustling bazaar, famous for its Rajasthan jewelry fabrics and shoes, boasts timeless quality and is undoubtedly a treasure trove for shoppers.
             </p>
             <p>
-              It was founded on November 18, 1727, by the ruler of Amber, Maharaja Sawai Jai
-              Singh II, the city named after him, the capital of Rajasthan with wide avenues and
-              spacious gardens. This charming city, with its romantic charm, takes you into
-              the era of royalty and tradition.
+              This charming city, with its romantic charm, takes you into the era of royalty and tradition.
             </p>
           </div>
         </div>
@@ -107,20 +98,54 @@ const AboutJaipur = () => {
 };
 
 // Chatbot Component
-const Chatbot = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! How can I assist you today?' }]);
-  const [input, setInput] = useState('');
+const Chatbot: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [messages, setMessages] = useState<{ sender: 'user' | 'bot'; text: string }[]>([
+    { sender: 'bot', text: 'Hello! How can I assist you today? Ask me about the conference!' }
+  ]);
+  const [input, setInput] = useState<string>('');
+
+  const qaDatabase: { [key: string]: string } = {
+    "when is the conference": "The International Conference on Engineering & Technology is scheduled for March 25-27, 2025.",
+    "conference dates?": "The International Conference on Engineering & Technology is scheduled for March 25-27, 2025.",
+    "when does the conference happen": "The International Conference on Engineering & Technology is scheduled for March 25-27, 2025.",
+    "what is the submission deadline": "The submission deadline for papers is January 15, 2025.",
+    "deadline for submission?": "The submission deadline for papers is January 15, 2025.",
+    "when do i submit papers": "The submission deadline for papers is January 15, 2025.",
+    "where is the conference held": "The conference will be held at Poornima College of Engineering in Jaipur, Rajasthan, India.",
+    "conference location?": "The conference will be held at Poornima College of Engineering in Jaipur, Rajasthan, India.",
+    "where is it happening": "The conference will be held at Poornima College of Engineering in Jaipur, Rajasthan, India.",
+    "how do i register": "You can register by clicking the 'Register Now' button on the homepage or visiting the /registration page.",
+    "how to register?": "You can register by clicking the 'Register Now' button on the homepage or visiting the /registration page.",
+    "registration process?": "You can register by clicking the 'Register Now' button on the homepage or visiting the /registration page.",
+    "what is the conference about": "The conference focuses on advancing innovations in engineering and technology for a sustainable future.",
+    "what’s the conference theme": "The conference focuses on advancing innovations in engineering and technology for a sustainable future.",
+    "conference purpose?": "The conference focuses on advancing innovations in engineering and technology for a sustainable future.",
+    "who can submit papers": "Researchers, students, and professionals in engineering and technology fields are welcome to submit papers.",
+    "who is eligible to submit": "Researchers, students, and professionals in engineering and technology fields are welcome to submit papers.",
+    "can students submit papers": "Yes, students, along with researchers and professionals in engineering and technology fields, are welcome to submit papers.",
+    "what is pce": "Poornima College of Engineering (PCE) is a leading engineering college in Rajasthan, established in 2000, known for its NAAC A+ accreditation and strong research culture.",
+    "tell me about pce": "Poornima College of Engineering (PCE) is a leading engineering college in Rajasthan, established in 2000, known for its NAAC A+ accreditation and strong research culture.",
+    "what does pce stand for": "Poornima College of Engineering (PCE) is a leading engineering college in Rajasthan, established in 2000, known for its NAAC A+ accreditation and strong research culture.",
+    "tell me about jaipur": "Jaipur, known as the Pink City, is the capital of Rajasthan, famous for its historic forts, palaces, and vibrant bazaars.",
+    "what’s jaipur like": "Jaipur, known as the Pink City, is the capital of Rajasthan, famous for its historic forts, palaces, and vibrant bazaars.",
+    "info about jaipur": "Jaipur, known as the Pink City, is the capital of Rajasthan, famous for its historic forts, palaces, and vibrant bazaars.",
+    "what are the key dates": "Key dates are: Submission Deadline - January 15, 2025, and Conference Dates - March 25-27, 2025.",
+    "important dates": "Key dates are: Submission Deadline - January 15, 2025, and Conference Dates - March 25-27, 2025.",
+    "key conference dates": "Key dates are: Submission Deadline - January 15, 2025, and Conference Dates - March 25-27, 2025.",
+    "who are the keynote speakers": "The list of keynote speakers will be announced soon. Check the /keynote-speakers page for updates!",
+    "keynote speakers": "The list of keynote speakers will be announced soon. Check the /keynote-speakers page for updates!",
+    "how much is registration": "Registration fees vary by category (e.g., students, professionals). Visit the /registration page for detailed pricing."
+  };
 
   const handleSend = () => {
     if (input.trim()) {
+      const userMessage = input.toLowerCase().trim();
       setMessages([...messages, { sender: 'user', text: input }]);
-      // Simulate AI response (replace with actual API call in production)
+      const response = qaDatabase[userMessage] ?? 
+        "I'm not sure about that. Try asking about the conference dates, submission deadline, or registration process!";
       setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          { sender: 'bot', text: `You asked: "${input}". How can I help further?` }
-        ]);
+        setMessages((prev) => [...prev, { sender: 'bot', text: response }]);
       }, 500);
       setInput('');
     }
@@ -128,20 +153,18 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Chatbot Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-4 right-4 bg-[#1a2a5e] text-white p-3 rounded-full shadow-lg hover:bg-[#2b3d7b] transition duration-300 z-50"
+        aria-label="Open chatbot"
       >
         <MessageCircle className="h-6 w-6" />
       </button>
-
-      {/* Chatbot Window */}
       {isOpen && (
         <div className="fixed bottom-16 right-4 w-80 bg-white rounded-lg shadow-xl z-50">
           <div className="bg-[#1a2a5e] text-white p-3 rounded-t-lg flex justify-between items-center">
             <h3 className="text-lg font-semibold">AI Chatbot</h3>
-            <button onClick={() => setIsOpen(false)} className="text-white">
+            <button onClick={() => setIsOpen(false)} className="text-white" aria-label="Close chatbot">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -164,7 +187,8 @@ const Chatbot = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSend()}
               className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a2a5e]"
-              placeholder="Type your message..."
+              placeholder="Ask me anything..."
+              aria-label="Chatbot input"
             />
             <button
               onClick={handleSend}
@@ -179,10 +203,12 @@ const Chatbot = () => {
   );
 };
 
-function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+// Navbar Component
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOrgDropdownOpen, setIsOrgDropdownOpen] = useState<boolean>(false);
 
-  const navItems = [
+  const navItems: { name: string; path: string; subItems?: { name: string; path: string }[] }[] = [
     { name: 'Home', path: '/' },
     { name: 'Call for Papers', path: '/call-for-papers' },
     { name: 'Registration', path: '/registration' },
@@ -191,23 +217,28 @@ function Navbar() {
     { name: 'Keynote Speakers', path: '/keynote-speakers' },
     { name: 'Downloads', path: '/downloads' },
     { name: 'Gallery', path: '/gallery' },
-    { name: 'Organization', path: '/organization' },
+    {
+      name: 'Organization',
+      path: '/organization',
+      subItems: [
+        { name: 'Advisory Committee', path: '/organization/advisory' },
+        { name: 'Technical Committee', path: '/organization/technical' },
+        { name: 'Organizing Committee', path: '/organization/organizing' },
+      ],
+    },
     { name: 'History', path: '/history' },
     { name: 'Contact', path: '/contact' },
   ];
 
   return (
     <header className="sticky top-0 z-50">
-      {/* Top Banner */}
       <div className="bg-[#1a2a5e] py-2 px-4 text-white text-sm text-center">
         <p>Conference Dates: March 25-27, 2025 | Submission Deadline: January 15, 2025</p>
       </div>
-
-      {/* Logo Section */}
       <div className="bg-white py-4 px-6 shadow-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-6">
-            <img src="/pcelogo.jpg" alt="College Logo" className="h-16 w-auto object-contain" />
+            <img src="/pcelogo.jpg" alt="Poornima College of Engineering Logo" className="h-16 w-auto object-contain" />
             <div className="hidden md:block h-12 w-px bg-gray-300" />
             <img src="/naaclogo.jpg" alt="NAAC Logo" className="h-14 w-auto" />
           </div>
@@ -217,56 +248,94 @@ function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Navigation Bar */}
       <nav className="bg-[#1a2a5e] text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
-                <Link
+                <div
                   key={item.name}
-                  to={item.path}
-                  className="px-4 py-2 text-sm font-medium hover:bg-[#2b3d7b] rounded-md transition duration-300"
+                  className="relative"
+                  onMouseEnter={() => item.subItems && setIsOrgDropdownOpen(true)}
+                  onMouseLeave={() => item.subItems && setIsOrgDropdownOpen(false)}
                 >
-                  {item.name}
-                </Link>
+                  <Link
+                    to={item.path}
+                    className="px-4 py-2 text-sm font-medium hover:bg-[#2b3d7b] rounded-md transition duration-300"
+                  >
+                    {item.name}
+                  </Link>
+                  {item.subItems && isOrgDropdownOpen && (
+                    <div className="absolute left-0 mt-0 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10">
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.path}
+                          className="block px-4 py-2 text-sm hover:bg-gray-100 transition duration-200"
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
             <div className="md:hidden">
-              <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-white focus:outline-none">
+              <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-white focus:outline-none" aria-label="Toggle menu">
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-[#1a2a5e] px-2 pt-2 pb-4">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-white hover:bg-[#2b3d7b] rounded-md text-base font-medium transition duration-200"
-              >
-                {item.name}
-              </Link>
+              <div key={item.name}>
+                <Link
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2 text-white hover:bg-[#2b3d7b] rounded-md text-base font-medium transition duration-200"
+                >
+                  {item.name}
+                </Link>
+                {item.subItems && (
+                  <div className="pl-4">
+                    {item.subItems.map((subItem) => (
+                      <Link
+                        key={subItem.name}
+                        to={subItem.path}
+                        onClick={() => setIsOpen(false)}
+                        className="block px-3 py-2 text-white hover:bg-[#2b3d7b] rounded-md text-sm transition duration-200"
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         )}
       </nav>
     </header>
   );
-}
+};
 
-function HomePage() {
+// HomePage Component with Video Background
+const HomePage: React.FC = () => {
   return (
     <div className="bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#1a2a5e] to-[#3b5998] text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+      <section className="relative text-white py-20 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          src="public\videos\background.mp4" // Replace with your video path
+        />
+        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-10"></div>
+        <div className="relative max-w-7xl mx-auto px-4 text-center z-20">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">International Conference on Engineering & Technology</h1>
           <p className="text-lg md:text-xl mb-6">March 25-27, 2025 | Exploring Innovations for a Sustainable Future</p>
           <div className="flex justify-center space-x-4">
@@ -285,17 +354,14 @@ function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* About PCE Section */}
       <AboutPCE />
-
-      {/* About Jaipur Section */}
       <AboutJaipur />
     </div>
   );
-}
+};
 
-function Footer() {
+// Footer Component
+const Footer: React.FC = () => {
   return (
     <footer className="bg-[#1a2a5e] text-white py-8">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -321,9 +387,22 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
-function App() {
+// Organization Component
+const OrganizationComponent: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<div>Organization Overview</div>} />
+      <Route path="advisory" element={<AdvisoryCommittee />} />
+      <Route path="technical" element={<TechnicalCommittee />} />
+      <Route path="organizing" element={<OrganizingCommittee />} />
+    </Routes>
+  );
+};
+
+// App Component
+const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen flex flex-col relative">
@@ -338,16 +417,16 @@ function App() {
             <Route path="/keynote-speakers" element={<KeynoteSpeakers />} />
             <Route path="/downloads" element={<Downloads />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/organization" element={<Organization />} />
-            <Route path="/history" element={<HistoryComponent />} />
+            <Route path="/organization/*" element={<OrganizationComponent />} />
+            <Route path="/history" element={<History />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
-        <Chatbot /> {/* Integrated Chatbot */}
+        <Chatbot />
       </div>
     </Router>
   );
-}
+};
 
 export default App;
